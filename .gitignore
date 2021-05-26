@@ -98,8 +98,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Servers
-Servers/
-
 # End of https://www.toptal.com/developers/gitignore/api/windows,java-web,eclipse
 

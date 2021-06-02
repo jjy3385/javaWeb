@@ -1,0 +1,63 @@
+package sec04.ex02;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class LogoutTest
+ */
+@WebServlet("/logout")
+public class LogoutTest extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	ServletContext context = null;
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doHandle(request,response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doHandle(request,response);
+	}
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		context = getServletContext();
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		String user_id = request.getParameter("user_id");
+		
+		session.invalidate();	//¼¼¼Ç°´Ã¼ ¼Ò¸ê
+		
+		List user_list = (ArrayList) context.getAttribute("user_list");
+		user_list.remove(user_id);
+		context.removeAttribute("user_list");
+		context.setAttribute("user_list", user_list);
+		out.println("·Î±×¾Æ¿ô Çß½À´Ï´Ù. ");
+		
+		
+	}
+
+}
